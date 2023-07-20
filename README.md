@@ -1,4 +1,4 @@
-# Bayzat Backend Coding Excercise
+# mycompany Backend Coding Excercise
 
 Welcome! In this excercise, you are asked to develop a simple RESTful service.
 
@@ -25,7 +25,7 @@ Dependant
 - Relation to employee
 
 ## Notes
-- Use **Symfony Framework (PHP)** or **Spring Boot** (any jvm language).
+- Use **Spring Boot** (any jvm language).
 - Expose a **REST API**, no frontend is required.
 - Usage of **kotlin** will be considered a plus.
 - Usage of **API Blueprint** will be considered a plus.

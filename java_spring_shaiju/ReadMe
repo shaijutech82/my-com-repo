@@ -2,5 +2,10 @@ Execute the MyComHrApplication.java
 
 API Blue print will be available in ,http://localhost:8080/swagger-ui.html#
 
-Junit tests are available in BayzatHrRestAPITest
+Junit tests are available in MyComHrRestAPITest
 
+=============
+Docker
+
+Build image->  docker build -t java_spring_shaiju .
+Run the container->  docker run -p 8090:8080 java_spring_shaiju

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java_spring_shaiju-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: java_spring_shaiju
+  template:
+    metadata:
+      labels:
+        app: java_spring_shaiju
+    spec:
+      containers:
+      - name: java_spring_shaiju
+        image: shaijuacrrepo1.azurecr.io/shaijutech82/java_spring_shaiju:#{Build.BuildId}#
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8085
+# service type loadbalancer       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: java_spring_shaiju
+    k8s-app: java_spring_shaiju
+  name: java_spring_shaiju
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8085
+  type: LoadBalancer
+  selector:
+    app: java_spring_shaiju

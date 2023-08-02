@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: java_spring_shaiju
-        image: shaijuacrrepo1.azurecr.io/shaijutech82/java_spring_shaiju:#{Build.BuildId}#
+        image: shaijuacrrepo1.azurecr.io/shaijutech82/my-com-repo:#{Build.BuildId}#
         imagePullPolicy: Always
         ports:
         - containerPort: 8085

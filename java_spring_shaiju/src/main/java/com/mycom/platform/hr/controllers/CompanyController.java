@@ -1,6 +1,7 @@
 package com.mycom.platform.hr.controllers;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.mycom.platform.hr.entities.Company;
 import com.mycom.platform.hr.services.CompanyService;
 
@@ -18,9 +20,13 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
 	
+
+	
 	@RequestMapping(method=RequestMethod.POST,path="/companies")
 	public Company createCompany(@RequestBody Company company){
-		return companyService.save(company);		
+		company=companyService.save(company);
+		return company;
+		
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,path="/companies")

@@ -8,4 +8,35 @@ Junit tests are available in MyComHrRestAPITest
 Docker
 
 Build image->  docker build -t java_spring_shaiju .
-Run the container->  docker run -p 8090:8080 java_spring_shaiju
+Run the container->  docker run -p 8000:8080 java_spring_shaiju
+
+
+===========
+Kubernetes
+az login
+az group create --name myAKSResourceGroup --location eastus
+az aks create --resource-group myAKSResourceGroup --name myAKSCluster --node-count 2 --generate-ssh-keys
+
+az aks show --name myAKSCluster --resource-group myAKSResourceGroup
+az aks get-credentials --resource-group myAKSResourceGroup --name myAKSCluster --overwrite-existing
+az acr create --resource-group myAKSResourceGroup --name shaijuacrrepo1 --sku Standard --location eastus
+az aks update -n myAKSCluster -g myAKSResourceGroup --attach-acr shaijuacrrepo1
+docker login shaijuacrrepo1.azurecr.io
+az aks check-acr --resource-group myAKSResourceGroup --name myAKSCluster --acr shaijuacrrepo1.azurecr.io
+docker tag java_spring_shaiju shaijuacrrepo1.azurecr.io/java_spring_shaiju:v1
+kubectl apply -f C:\shaiju\mylearning\git_repos\my-com-repo\java_spring_shaiju\rbac.yml
+kubectl apply -f C:\shaiju\mylearning\git_repos\my-com-repo\java_spring_shaiju\aks-deploy-from-acr-bkup.yml
+
+kubectl get service my-com-app-service --watch
+
+kubectl scale --replicas=2 deployment/my-com-app-deployment
+
+kubectl get nodes
+kubectl get deployments --all-namespaces=true
+
+az group delete --name myAKSResourceGroup --yes --no-wait
+
+
+=====
+Test application
+http://52.226.253.23/mycom/companies

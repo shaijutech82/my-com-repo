@@ -2,12 +2,14 @@ package com.mycom.platform.hr.services.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentMap;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.mycom.platform.exceptions.EntityNotFoundException;
 import com.mycom.platform.hr.entities.Company;
 import com.mycom.platform.hr.repositories.CompanyRepository;
@@ -21,10 +23,19 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Autowired
 	private CompanyRepository companyRepository;
+	
+    @Autowired
+    private HazelcastInstance hazelcastInstance;
+    
+    private ConcurrentMap<Long,Company> getCompanyMap() {
+        return hazelcastInstance.getMap("commap");
+    }
 
 	@Override
 	public Company save(Company company) {
-		return companyRepository.save(company);
+		company=companyRepository.save(company);
+		getCompanyMap().put(company.getId(), company);
+		return company;
 	}
 
 	@Override
@@ -34,6 +45,8 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Override
 	public Company findById(Long id) {
+		Company company=getCompanyMap().get(id);
+		if (company!=null) return company;
 		Optional<Company> object = companyRepository.findById(id);
 		if(object.isPresent()){
 			return object.get();

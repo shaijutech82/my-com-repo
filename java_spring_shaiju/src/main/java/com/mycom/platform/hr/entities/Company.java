@@ -1,5 +1,6 @@
 package com.mycom.platform.hr.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,8 +12,18 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 @Entity
-public class Company {
+@EqualsAndHashCode
+@ToString
+public class Company implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +31,14 @@ public class Company {
 
 	private String name;
 	private String address;
+	private String contactNumber;
 	
+	public String getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
 	@OneToMany(mappedBy = "company")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Employee> employees;

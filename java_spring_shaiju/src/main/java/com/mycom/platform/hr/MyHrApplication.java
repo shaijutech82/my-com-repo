@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.mycom.platform.*")
 public class MyHrApplication {
 	public static void main(String[] args) {
-		Logger.getLogger(MyHrApplication.class.getName()).info("Deploying version v2");
+		Logger.getLogger(MyHrApplication.class.getName()).info("Deploying version v11");
 		SpringApplication.run(MyHrApplication.class, args);
 		
 	}

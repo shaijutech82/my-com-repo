@@ -8,7 +8,7 @@ image:
   repository: shaijuacrrepo1.azurecr.io/java_spring_shaiju
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v4"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""

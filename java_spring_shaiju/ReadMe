@@ -24,11 +24,11 @@ az aks update -n myAKSCluster -g myAKSResourceGroup --attach-acr shaijuacrrepo1
 docker login shaijuacrrepo1.azurecr.io
 az aks check-acr --resource-group myAKSResourceGroup --name myAKSCluster --acr shaijuacrrepo1.azurecr.io
 docker tag java_spring_shaiju shaijuacrrepo1.azurecr.io/java_spring_shaiju:v1
-kubectl apply -f C:\shaiju\mylearning\git_repos\my-com-repo\java_spring_shaiju\rbac.yml
+docker push shaijuacrrepo1.azurecr.io/java_spring_shaiju:v4
+kubectl apply -f C:\shaiju\mylearning\git_repos\my-com-repo\java_spring_shaiju\rbac.yaml
 kubectl apply -f C:\shaiju\mylearning\git_repos\my-com-repo\java_spring_shaiju\aks-deploy-from-acr-bkup.yml
 
 kubectl get service my-com-app-service --watch
-
 kubectl scale --replicas=2 deployment/my-com-app-deployment
 
 kubectl get nodes
@@ -40,3 +40,12 @@ az group delete --name myAKSResourceGroup --yes --no-wait
 =====
 Test application
 http://52.226.253.23/mycom/companies
+
+====
+Helm
+
+helm create mycomhelm
+
+helm install mycomhelm mycomhelm/
+helm list
+helm uninstall --namespace default mycomhelm
